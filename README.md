@@ -1,7 +1,7 @@
 # GOapp
 
-Inicio do Projeto GOapp
+Begining of project GOapp.
 
-## Webscrap
+## Webscraping
 
-Scripts Webscrap em /webscraping separados por imobiliária.
+Scripts Webscraping in /webscraping separated by real estate office.
