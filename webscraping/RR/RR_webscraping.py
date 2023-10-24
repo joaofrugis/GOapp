@@ -1,4 +1,5 @@
 import pandas as pd
+import googlemaps
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
@@ -6,6 +7,7 @@ cards = []
 
 url = 'https://www.rrsuacasa.com.br/imovel/?finalidade=venda&tipo=&cid=Leme&bairro=0&sui=&ban=&gar=&dor=&pag='
 pages = 11
+gmaps = googlemaps.Client(key='AIzaSyArMwSvnOgwWi68S80guZDdk9L5nHztvhQ')
 
 req = Request(
     url=url, 
@@ -37,6 +39,10 @@ for i in range(1,pages + 1):
         card['tipo'] = anuncio.find('p', {'class': 'imovelcard__info__ref'}).get_text().split('-')[1].strip()
         
         card['endereco'] = anuncio.find('h2', {'class': 'imovelcard__info__local'}).get_text().replace('/', '-').replace(',',' -')
+
+        result = gmaps.geocode(card['endereco'].split('-')[0] + ',Leme,SP')
+        card['lat'] = result[0]['geometry']['location']['lat']
+        card['long'] = result[0]['geometry']['location']['lng']
 
         extra_infos = anuncio.findAll('div', {'class', 'imovelcard__info__feature'})
         card['area'] = '0'
