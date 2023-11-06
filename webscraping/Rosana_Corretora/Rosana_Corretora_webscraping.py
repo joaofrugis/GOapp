@@ -1,4 +1,5 @@
 import pandas as pd
+import googlemaps
 import time
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
@@ -11,7 +12,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 cards = []
 
-url = 'https://rosanamoreiracorretora.com.br/imoveis/Venda/Tipo-de-imovel/Cidade/Bairro/Minimo_Area-minima/Maximo_Area-maxima/Codigo/Quartos_Garagem_Banheiros'
+url = 'https://rosanamoreiracorretora.com.br/imoveis/Tipo-de-negocio/Tipo-de-imovel/Leme/Bairro/Minimo/Maximo/Codigo/Quartos_Garagem'
+gmaps = googlemaps.Client(key='AIzaSyArMwSvnOgwWi68S80guZDdk9L5nHztvhQ')
 
 chrome_options = Options()
 chrome_options.add_argument("--start-maximized")
@@ -49,6 +51,10 @@ while stop_condition:
 
         card['endereco'] = anuncio.find('div', {'class', 'property-location'}).get_text().replace(u'\n','').strip()
 
+        result = gmaps.geocode(card['endereco'].split('/')[0].replace('Leme','') + ',Leme,SP')
+        card['lat'] = result[0]['geometry']['location']['lat']
+        card['long'] = result[0]['geometry']['location']['lng']
+
         extra_infos = anuncio.findAll('div', {'class', 'col-xs-3 col-lg-3 col-sm-3 col-md-3'})
 
         card['area'] = '0'
@@ -72,7 +78,7 @@ while stop_condition:
         
         count += 1
         cards.append(card)
-    if count_page == 39:
+    if count_page == 31:
         stop_condition = False
     else:
         count_page += 1
