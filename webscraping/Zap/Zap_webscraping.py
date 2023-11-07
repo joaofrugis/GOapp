@@ -130,10 +130,12 @@ for i in range(1,pages+1):
                     menor_valor = valor
                     chave_valor = chave
             
-
-            element = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, f'a[data-id="' + chave_valor + '"]'))
-            )
+            try:
+                element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, f'a[data-id="' + chave_valor + '"]'))
+                )
+            except:
+                continue
 
             element.click()
 
