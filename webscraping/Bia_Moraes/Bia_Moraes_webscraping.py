@@ -28,7 +28,7 @@ for i in range(1,pages + 1):
     html = response.read().decode('utf-8')
     soup = BeautifulSoup(html, 'html.parser')
 
-    anuncios = soup.findAll('div', {"class": "card-with-buttons__footer"})
+    anuncios = soup.findAll('a', {"class": "card-with-buttons borderHover"})
     count = 1
     for anuncio in anuncios:
         print('Anuncio ' + str(count))
@@ -70,6 +70,7 @@ for i in range(1,pages + 1):
 
         card['valor'] = anuncio.find('p', {'class':'card-with-buttons__value'}).get_text().split(' ')[1].replace('.','').replace(',','.')
 
+        card['url_anuncio'] = 'https://www.biamoraesimoveis.com.br' + anuncio['href']
         count += 1
         cards.append(card)
 

@@ -56,7 +56,8 @@ for i in range(1,pages + 1):
                 card['banheiros'] = element.find('p').get_text().replace('banheiros', '')
         
         card['valor'] = anuncio.find('span',{'class','h-money location'}).get_text().replace('R$ ','').replace('.','').replace(',','.')
-
+        
+        card['url_anuncio'] = 'https://www.bethpivaimoveis.com.br' + anuncio.find('a')['href']
         count += 1
         cards.append(card)
     

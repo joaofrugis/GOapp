@@ -73,6 +73,9 @@ for i in range(1,pages + 1):
 
 
         card['valor'] = anuncio.find('li').get_text().split(' ')[1].replace('.','').replace(',','.')
+
+        card['url_anuncio'] = 'https://www.fenixleme.com.br' + anuncio.find('a', {'class': 'btver cor0'})['href']
+
         count += 1
         cards.append(card)
     

@@ -76,6 +76,7 @@ while stop_condition:
 
         card['valor'] = anuncio.find('div', {'class', 'property-price'}).get_text().replace(u'\n','').split('C')[0].replace('R$ ','').replace('.','').replace(',','.').strip()
         
+        card['url_anuncio'] = anuncio.find('a')['href']
         count += 1
         cards.append(card)
     if count_page == 31:
