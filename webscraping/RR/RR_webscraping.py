@@ -68,6 +68,8 @@ for i in range(1,pages + 1):
 
         
         card['valor'] = anuncio.find('div', {'class': 'col imovelcard__valor'}).find('p', {'class' , 'imovelcard__valor__valor'}).get_text().split(' ')[1].replace('.','').replace(',','.')
+        
+        card['url_anuncio'] = 'https://www.rrsuacasa.com.br' + anuncio.find('a')['href']
         count += 1
         cards.append(card)
 
